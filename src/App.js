@@ -1,9 +1,11 @@
 import Counter from "./features/counter/Counter";
-
+import Layout from "./Layout/Layout";
 function App() {
   return (
     <div className="App">
-      <Counter />
+      <Layout>
+        <Counter />
+      </Layout>
     </div>
   );
 }
