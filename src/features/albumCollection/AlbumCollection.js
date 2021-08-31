@@ -99,7 +99,7 @@ const AlbumCollection = () => {
 
   // componets
   const AlbumList = () => {
-    if (albums && albums.length > 1) {
+    if (albums && albums.length > 0) {
       return (
         <Grid container spacing={3}>
           {albums.map((item) => (
