@@ -1,1 +1,1 @@
-Image storing app for Portfolio
+Image storing app built with the MERN Stack
