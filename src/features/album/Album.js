@@ -35,11 +35,11 @@ const Album = () => {
   const closeUploadDialog = () => {
     setUploadDialogOpen(false);
   };
+
   const handleUploadSubmit = (payload) => {
     const { title, base64EncodedImage } = payload;
 
     const data = { photo: base64EncodedImage, title, token, albumId };
-
     dispatch(uploadPhoto(data));
   };
   // =====================
@@ -136,7 +136,7 @@ const Album = () => {
             <Refresh />
           </IconButton>
         </Box>
-        <Box>
+        <Box sx={{ py: 3 }}>
           {loading ? (
             <Box sx={{ textAlign: "center" }}>
               {" "}
@@ -146,28 +146,6 @@ const Album = () => {
             <PhotoList />
           )}
         </Box>
-
-        {/* <label htmlFor="upload-photo">
-            <Input
-              accept="image/*"
-              id="upload-photo"
-              onChange={handleFileChange}
-              type="file"
-            />
-          </label>
-          <Button onClick={handleSubmit} variant="contained" component="span">
-            Upload
-          </Button>
-          <PhotoCard />
-
-          {previewSource && (
-            <img
-              src={previewSource}
-              alt="chosen"
-              height="300px"
-              width="400px"
-            />
-          )} */}
       </Container>
       <PhotoUploadDialog
         open={uploadDialogOpen}

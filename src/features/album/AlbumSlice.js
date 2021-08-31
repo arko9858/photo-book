@@ -36,7 +36,8 @@ export const uploadPhoto = createAsyncThunk(
     };
 
     const res = await axios.post("photo/create/", payload, config);
-
+    console.log('Photo upload response')
+    console.log(res.data)
     return res.data;
   }
 );

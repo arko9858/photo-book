@@ -44,8 +44,8 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
     reader.onloadend = () => {
       const payload = { title, base64EncodedImage: reader.result };
       handleSubmit(payload);
-      console.log('payload')
-      console.log(payload)
+      // console.log('payload')
+      // console.log(payload)
     };
     handleDialogOnClose();
   };
