@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Box, Stack,Typography } from "@material-ui/core";
+import { Container, Box, Stack, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { signInWithGoogleToken } from "./authSlice";
 // import { signInWithGoogleToken, signInWithLocal } from "./authSlice";
@@ -20,11 +20,15 @@ const SignIn = () => {
     dispatch(signInWithGoogleToken(token));
   };
 
-  const googleOnFailure = () => {
-    console.log("Google signin failed");
+  const googleOnFailure = async (res) => {
+    console.log(res);
+    // console.log("Google signin failed");
   };
   return (
-    <Container maxWidth="xs" sx={{display:"flex",justifyContent:'center',mt:8 }}>
+    <Container
+      maxWidth="xs"
+      sx={{ display: "flex", justifyContent: "center", mt: 8 }}
+    >
       <Stack spacing={2}>
         {/* <SignInForm onFormSubmit={onFormSubmit} />
         <Typography align="center" color="GrayText">
@@ -33,7 +37,7 @@ const SignIn = () => {
         <Typography align="center" variant="h5" color="GrayText">
           Sign In
         </Typography>
-        <Box sx={{ width:'300px'}}>
+        <Box sx={{ width: "300px" }}>
           <GoogleButton
             googleOnSuccess={googleOnSuccess}
             googleOnFailure={googleOnFailure}
