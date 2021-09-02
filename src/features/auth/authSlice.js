@@ -19,8 +19,8 @@ export const signInWithLocal = createAsyncThunk(
     const res = await axios.get(
       "auth/login/" + credentials.username + "/" + credentials.password
     );
-    console.log("signin local res data");
-    console.log(res.data);
+    // console.log("signin local res data");
+    // console.log(res.data);
     return res.data;
   }
 );

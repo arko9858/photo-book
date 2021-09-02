@@ -36,8 +36,8 @@ export const uploadPhoto = createAsyncThunk(
     };
 
     const res = await axios.post("photo/create/", payload, config);
-    console.log('Photo upload response')
-    console.log(res.data)
+    // console.log('Photo upload response')
+    // console.log(res.data)
     return res.data;
   }
 );
@@ -55,7 +55,7 @@ export const deletePhoto = createAsyncThunk(
     };
 
     const res = await axios.delete("photo/" + photoId, config);
-    
+
     return res.data;
   }
 );

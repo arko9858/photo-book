@@ -77,7 +77,7 @@ const PhotoCard = ({ data, openDeleteDialog }) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Tooltip title="Work in progress...">
+          <Tooltip title="Work in progress">
             <Button onClick={handleImageDownload} startIcon={<Download />}>
               Download
             </Button>
