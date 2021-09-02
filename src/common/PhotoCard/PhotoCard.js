@@ -11,13 +11,13 @@ import {
   IconButton,
   Box,
   Menu,
-  MenuItem
+  MenuItem,
+  Tooltip,
 } from "@material-ui/core";
 
 import { Download, MoreVert } from "@material-ui/icons";
 
-const PhotoCard = ({ data , openDeleteDialog}) => {
-
+const PhotoCard = ({ data, openDeleteDialog }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -29,16 +29,29 @@ const PhotoCard = ({ data , openDeleteDialog}) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleEditClick = () => {};
 
-  const handleEditClick = ()=>{
-    
-  }
-
-  const handleDeleteClick = ()=>{
+  const handleDeleteClick = () => {
     handleClose();
-    openDeleteDialog(data)
-  }
+    openDeleteDialog(data);
+  };
 
+  // const downloadImage = () => {
+  //   //creating an invisible element
+  //   var element = document.createElement("a");
+  //   element.setAttribute("href", data.photoUrl);
+  //   element.setAttribute("download", data.title + ".jpg");
+  //   document.body.appendChild(element);
+
+  //   element.click();
+
+  //   document.body.removeChild(element);
+  // };
+
+  const handleImageDownload = () => {
+    // console.log(data.photoUrl);
+    // downloadImage();
+  };
   return (
     <Fragment>
       <Card>
@@ -53,7 +66,7 @@ const PhotoCard = ({ data , openDeleteDialog}) => {
           <Typography gutterBottom variant="h5" component="div">
             {data.title}
           </Typography>
-          
+
           <Typography variant="body2" color="GrayText">
             {"Size: " + (data.bytes / 1024).toFixed(2) + " KB"}
           </Typography>
@@ -64,7 +77,11 @@ const PhotoCard = ({ data , openDeleteDialog}) => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button startIcon={<Download />}>Download</Button>
+          <Tooltip title="Work in progress...">
+            <Button onClick={handleImageDownload} startIcon={<Download />}>
+              Download
+            </Button>
+          </Tooltip>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton onClick={openEditMenu} aria-label="options">
             <MoreVert />
@@ -72,7 +89,7 @@ const PhotoCard = ({ data , openDeleteDialog}) => {
         </CardActions>
       </Card>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <MenuItem onClick={handleEditClick}>Edit</MenuItem>
+          <MenuItem disabled onClick={handleEditClick}>Edit</MenuItem>
         <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
       </Menu>
     </Fragment>

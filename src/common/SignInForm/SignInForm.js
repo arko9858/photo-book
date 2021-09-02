@@ -5,7 +5,7 @@ import {
   Typography,
   Box,
   TextField,
-  // FormControlLabel,
+  Tooltip,
   // Checkbox,
   Button,
 } from "@material-ui/core";
@@ -100,9 +100,13 @@ const SignInForm = ({ onFormSubmit }) => {
         >
           Sign In
         </Button>
-        <Link to="/signup" variant="body2">
-          {"Don't have an account? Sign Up"}
-        </Link>
+        <Tooltip title="Work in progress. Please use the google signin option for now.">
+          <Box>
+            <Link to="/" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
+          </Box>
+        </Tooltip>
       </Box>
     </Paper>
   );

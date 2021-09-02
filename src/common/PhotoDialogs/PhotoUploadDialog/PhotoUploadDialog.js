@@ -5,7 +5,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Input, Stack, Box } from "@material-ui/core";
+import { Input, Stack, Box, Typography } from "@material-ui/core";
 import { PhotoCamera } from "@material-ui/icons";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
@@ -17,6 +17,7 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewSource, setPreviewSource] = useState(null);
   const [title, setTitle] = useState("");
+  const [uploadDisabled, setUploadDisabled] = useState(true);
 
   const previewFile = (file) => {
     const reader = new FileReader();
@@ -26,14 +27,46 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
     };
   };
 
+  const checkFormValid = (imageFile, imageTitle) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(imageFile);
+    reader.onloadend = () => {
+      const image = new Image();
+      image.src = reader.result;
+      image.onload = () => {
+        const size = imageFile.size;
+        const sizeLimit = 5 * 1024 * 1024; //5 MB
+        const width = image.naturalWidth;
+        const height = image.naturalHeight;
+
+        if (
+          width < 1500 &&
+          height < 1500 &&
+          size < sizeLimit &&
+          imageTitle.length > 0
+        ) {
+          setUploadDisabled(false);
+        } else {
+          setUploadDisabled(true);
+        }
+      };
+    };
+  };
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (!file) {
       setSelectedFile(null);
     } else {
+      checkFormValid(file, title);
       previewFile(file);
       setSelectedFile(file);
     }
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+    checkFormValid(selectedFile, e.target.value);
   };
 
   const handleDialogSubmit = () => {
@@ -41,11 +74,9 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
 
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
-    reader.onloadend = () => {
-      const payload = { title, base64EncodedImage: reader.result };
+    reader.onload = (e) => {
+      const payload = { title, base64EncodedImage: e.target.result };
       handleSubmit(payload);
-      // console.log('payload')
-      // console.log(payload)
     };
     handleDialogOnClose();
   };
@@ -63,6 +94,17 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
         sx={{ maxWidth: "500px", width: "100%", minWidth: "300px" }}
       >
         <Stack>
+          <Box>
+            <Typography variant="body2">
+              1. Image resolution cannot exceed 1500x1500
+            </Typography>
+            <Typography variant="body2">
+              2. Image size should be less than 5 MB
+            </Typography>
+            <Typography variant="body2">
+              3. Title cannot be empty
+            </Typography>
+          </Box>
           {previewSource && (
             <img
               src={previewSource}
@@ -95,15 +137,15 @@ const PhotoUploadDialog = ({ open, handleClose, handleSubmit }) => {
             size="small"
             label="Photo Title"
             value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
+            onChange={handleTitleChange}
           />
         </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleDialogOnClose}>Cancel</Button>
-        <Button onClick={handleDialogSubmit}>Upload</Button>
+        <Button disabled={uploadDisabled} onClick={handleDialogSubmit}>
+          Upload
+        </Button>
       </DialogActions>
     </Dialog>
   );
