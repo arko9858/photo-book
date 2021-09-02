@@ -34,9 +34,7 @@ const SignIn = () => {
         <Typography align="center" color="GrayText">
           or
         </Typography>
-        <Typography align="center" variant="h5" color="GrayText">
-          Sign In
-        </Typography>
+
         <Box>
           <GoogleButton
             googleOnSuccess={googleOnSuccess}
